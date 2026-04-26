@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+<title>Contact Us | VTK Saltlick</title>
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f7faf5;
+color:#1f2d1f;
+line-height:1.6;
+}
+
+
+/* ================= NAVBAR ================= */
+.navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 50px;
+
+background:rgba(11,61,46,.95);
+backdrop-filter:blur(8px);
+
+z-index:1000;
+}
+
+.logo{
+color:#fff;
+font-size:28px;
+font-weight:800;
+}
+
+.nav-links{
+display:flex;
+list-style:none;
+}
+
+.nav-links li{
+margin-left:25px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+position:relative;
+padding-bottom:6px;
+transition:.3s;
+}
+
+/* HOVER EFFECT FIX */
+.nav-links a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:0;
+width:0;
+height:2px;
+background:#f59e0b;
+transition:.3s;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.nav-links a:hover{
+color:#f59e0b;
+}
+
+
+.menu-btn{
+display:none;
+background:none;
+border:none;
+font-size:34px;
+color:white;
+cursor:pointer;
+}
+
+
+/* MOBILE */
+@media(max-width:992px){
+
+.menu-btn{
+display:block;
+}
+
+.nav-links{
+position:fixed;
+top:80px;
+right:-100%;
+width:280px;
+height:calc(100vh - 80px);
+background:#0b3d2e;
+
+flex-direction:column;
+padding:40px 30px;
+gap:25px;
+
+transition:.4s;
+}
+
+.nav-links.active{
+right:0;
+}
+
+.nav-links li{
+margin-left:0;
+}
+
+}
+
+
+/* HERO */
+header.hero{
+background:linear-gradient(135deg,#1d5f2f,#4f8f3b);
+color:white;
+padding:120px 20px 90px;
+text-align:center;
+}
+
+header.hero h1{
+font-size:55px;
+margin-bottom:15px;
+}
+
+header.hero p{
+max-width:700px;
+margin:auto;
+}
+
+
+/* CONTENT */
+.container{
+max-width:1200px;
+margin:auto;
+padding:70px 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(350px,1fr));
+gap:40px;
+}
+
+.card{
+background:#fff;
+padding:35px;
+border-radius:20px;
+box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.card h2{
+margin-bottom:20px;
+color:#205d30;
+}
+
+.info-box{
+background:#f4f9f1;
+padding:18px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+input,textarea{
+width:100%;
+padding:15px;
+margin-bottom:18px;
+border:1px solid #d6dfd2;
+border-radius:12px;
+}
+
+textarea{
+min-height:150px;
+resize:none;
+}
+
+.submit-btn{
+background:#2d7a39;
+color:white;
+border:none;
+padding:15px 28px;
+border-radius:40px;
+font-weight:600;
+cursor:pointer;
+}
+
+#status{
+margin-top:15px;
+font-weight:600;
+}
+
+.map{
+margin-top:60px;
+overflow:hidden;
+border-radius:25px;
+}
+
+iframe{
+width:100%;
+height:420px;
+border:0;
+}
+
+.whatsapp{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#25D366;
+color:#fff;
+padding:15px 20px;
+border-radius:50px;
+text-decoration:none;
+}
+
+footer{
+background:#173c21;
+color:#fff;
+text-align:center;
+padding:35px;
+margin-top:70px;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+<div class="logo">VTK</div>
+
+<ul class="nav-links" id="navLinks">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+<li>
+<a href="product.html">
+Product
+</a>
+</li>
+
+<li>
+<a href="how-to-use.html">
+How To Use
+</a>
+</li>
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+</ul>
+
+<button class="menu-btn"
+id="menuBtn">&#9776;</button>
+
+</header>
+
+
+
+<header class="hero">
+
+<h1>Contact DKAY-VET</h1>
+
+<p>
+Have questions about VTK Saltlick?
+Reach out anytime.
+</p>
+
+</header>
+
+
+<section class="container">
+
+<div class="grid">
+
+<div class="card">
+
+<h2>Get In Touch</h2>
+
+<div class="info-box">
+<strong>Address</strong>
+DKAY-VET, Gambari, Ilorin, Kwara State
+</div>
+
+<div class="info-box">
+<strong>Phone</strong>
+08122569014
+</div>
+
+<div class="info-box">
+<strong>Email</strong>
+enochamurawaiye01@gmail.com
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Send Us a Message</h2>
+
+<form id="contactForm">
+
+<input
+id="name"
+type="text"
+placeholder="Full Name"
+required>
+
+<input
+id="email"
+type="email"
+placeholder="Email"
+required>
+
+<input
+id="phone"
+type="tel"
+placeholder="Phone"
+required>
+
+<textarea
+id="message"
+placeholder="Your Message"
+required></textarea>
+
+<button
+class="submit-btn"
+type="submit">
+Submit Message
+</button>
+
+<div id="status"></div>
+
+</form>
+
+</div>
+
+</div>
+
+
+<div class="map">
+<iframe
+src="https://www.google.com/maps?q=Gambari%20Ilorin%20Kwara&output=embed">
+</iframe>
+</div>
+
+</section>
+
+
+<a class="whatsapp"
+href="https://wa.me/2348122569014"
+target="_blank">
+Chat on WhatsApp
+</a>
+
+
+<footer>
+© 2026 VTK Saltlick — Powered by DKAY-VET
+</footer>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig={
+apiKey:"AIzaSyAaidcD5gxQhjCLl8dn8q0-J5uSvoF5WcM",
+authDomain:"vtk-project-1de73.firebaseapp.com",
+projectId:"vtk-project-1de73"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+
+/* CONTACT FORM */
+document
+.getElementById("contactForm")
+.addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+try{
+
+await addDoc(
+collection(db,"contactMessages"),
+{
+name:
+document.getElementById("name").value,
+
+email:
+document.getElementById("email").value,
+
+phone:
+document.getElementById("phone").value,
+
+message:
+document.getElementById("message").value,
+
+createdAt:
+serverTimestamp()
+}
+);
+
+document.getElementById("status").innerHTML=
+"Message sent successfully.";
+
+this.reset();
+
+}
+catch(error){
+
+console.error(error);
+
+document.getElementById("status").innerHTML=
+"Error sending message.";
+
+}
+
+}
+);
+
+
+/* MOBILE MENU */
+document
+.getElementById("menuBtn")
+.addEventListener("click",function(){
+
+document
+.getElementById("navLinks")
+.classList.toggle("active");
+
+});
+
+</script>
+
+</body>
+</html>

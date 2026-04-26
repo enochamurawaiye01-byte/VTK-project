@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>How To Use VTK Salt Lick</title>
+
+<style>
+
+/* ================= GLOBAL ================= */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f7f6;
+color:#0b3d2e;
+overflow-x:hidden;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 50px;
+
+background:rgba(11,61,46,.95);
+backdrop-filter:blur(6px);
+
+border-bottom:1px solid rgba(255,255,255,.2);
+
+z-index:1000;
+}
+
+.logo{
+color:white;
+font-size:26px;
+font-weight:800;
+}
+
+.nav-links{
+display:flex;
+list-style:none;
+}
+
+.nav-links li{
+margin-left:25px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+position:relative;
+padding-bottom:5px;
+transition:.3s;
+}
+
+/* HOVER EFFECT */
+.nav-links a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:0;
+width:0;
+height:2px;
+background:#f59e0b;
+transition:.3s;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.nav-links a:hover{
+color:#f59e0b;
+}
+
+
+/* HAMBURGER */
+.menu-btn{
+display:none;
+background:none;
+border:none;
+font-size:34px;
+color:white;
+cursor:pointer;
+}
+
+
+/* MOBILE */
+@media(max-width:992px){
+
+.navbar{
+padding:0 20px;
+}
+
+.menu-btn{
+display:block;
+z-index:1100;
+}
+
+.nav-links{
+position:fixed;
+top:80px;
+right:-100%;
+width:280px;
+height:calc(100vh - 80px);
+
+background:#0b3d2e;
+
+flex-direction:column;
+align-items:flex-start;
+
+padding:50px 30px;
+gap:25px;
+
+transition:.4s;
+}
+
+.nav-links.active{
+right:0;
+}
+
+.nav-links li{
+margin-left:0;
+}
+
+}
+
+
+/* ================= HERO ================= */
+
+.hero{
+background:linear-gradient(
+135deg,
+#0b3d2e,
+#145a32
+);
+
+color:white;
+padding:130px 20px 90px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+width:600px;
+height:600px;
+background:rgba(212,175,55,.08);
+top:-200px;
+right:-200px;
+border-radius:50%;
+filter:blur(120px);
+}
+
+.hero h1{
+font-size:64px;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:800px;
+margin:auto;
+font-size:18px;
+line-height:1.8;
+opacity:.9;
+}
+
+
+/* BENEFITS */
+.benefits{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:80px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.benefit-card{
+background:white;
+padding:25px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.benefit-card:hover{
+transform:translateY(-8px);
+}
+
+
+/* STEPS */
+.section-title{
+text-align:center;
+font-size:38px;
+margin-bottom:50px;
+}
+
+.steps{
+padding:60px 20px 100px;
+max-width:1200px;
+margin:auto;
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:25px;
+}
+
+.step{
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.step:hover{
+transform:translateY(-10px);
+}
+
+.step-num{
+width:50px;
+height:50px;
+background:#f59e0b;
+color:white;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+
+/* TIPS */
+.tips{
+background:#eef6f1;
+padding:90px 20px;
+}
+
+.tips-container{
+max-width:1000px;
+margin:auto;
+}
+
+.tip{
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:12px;
+box-shadow:0 8px 18px rgba(0,0,0,.06);
+border-left:5px solid #f59e0b;
+}
+
+
+/* IMPACT */
+.impact{
+padding:100px 20px;
+text-align:center;
+}
+
+.stats{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:30px;
+margin-top:40px;
+}
+
+.stat{
+background:#0b3d2e;
+color:white;
+padding:40px;
+border-radius:20px;
+min-width:200px;
+}
+
+.stat h1{
+font-size:50px;
+color:#f59e0b;
+}
+
+
+/* CTA */
+.cta{
+background:linear-gradient(
+135deg,
+#145a32,
+#0b3d2e
+);
+
+color:white;
+text-align:center;
+padding:120px 20px;
+}
+
+.cta h2{
+font-size:44px;
+margin-bottom:20px;
+}
+
+.cta a{
+display:inline-block;
+margin-top:20px;
+padding:16px 45px;
+background:#f59e0b;
+color:white;
+border-radius:40px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.cta a:hover{
+transform:translateY(-5px);
+background:#ffb020;
+}
+
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+.hero h1{
+font-size:38px;
+}
+
+.section-title{
+font-size:28px;
+}
+
+.cta h2{
+font-size:30px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+<div class="logo">VTK</div>
+
+<ul class="nav-links"
+id="navLinks">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+<li>
+<a href="product.html">
+Product
+</a>
+</li>
+
+<li>
+<a href="how-to-use.html">
+How To Use
+</a>
+</li>
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+</ul>
+
+<button class="menu-btn"
+id="menuBtn">
+&#9776;
+</button>
+
+</header>
+
+
+
+<section class="hero">
+
+<h1>
+How To Use VTK Salt Lick
+</h1>
+
+<p>
+A complete professional guide
+on maximizing livestock health
+using VTK premium mineral blocks.
+</p>
+
+</section>
+
+
+
+<section class="benefits">
+
+<div class="benefit-card">
+<h3>Stronger Immunity</h3>
+<p>Boosts resistance naturally.</p>
+</div>
+
+<div class="benefit-card">
+<h3>Faster Growth</h3>
+<p>Improves weight gain.</p>
+</div>
+
+<div class="benefit-card">
+<h3>Better Milk Yield</h3>
+<p>Supports dairy productivity.</p>
+</div>
+
+<div class="benefit-card">
+<h3>Improved Fertility</h3>
+<p>Supports reproductive health.</p>
+</div>
+
+</section>
+
+
+
+<h2 class="section-title">
+Step-by-Step Usage Guide
+</h2>
+
+<section class="steps">
+
+<div class="step">
+<div class="step-num">1</div>
+<h3>Place Properly</h3>
+<p>Install in dry feeding areas.</p>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<h3>Allow Free Access</h3>
+<p>Let livestock lick naturally.</p>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<h3>Monitor Usage</h3>
+<p>Check consumption weekly.</p>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<h3>Replace When Needed</h3>
+<p>Replace once reduced.</p>
+</div>
+
+</section>
+
+
+
+<section class="tips">
+
+<h2 class="section-title">
+Expert Farming Tips
+</h2>
+
+<div class="tips-container">
+
+<div class="tip">
+Do not expose to heavy rain.
+</div>
+
+<div class="tip">
+Use with clean water supply.
+</div>
+
+<div class="tip">
+Introduce gradually to young stock.
+</div>
+
+<div class="tip">
+Allow spacing for large herds.
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="impact">
+
+<h2>Real Farm Impact</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h1>500+</h1>
+<p>Farms Using VTK</p>
+</div>
+
+<div class="stat">
+<h1>98%</h1>
+<p>Success Rate</p>
+</div>
+
+<div class="stat">
+<h1>10+</h1>
+<p>Years Trusted</p>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="cta">
+
+<h2>
+Start Improving
+Your Livestock Today
+</h2>
+
+<p>
+Join thousands of farmers
+using VTK mineral solutions.
+</p>
+
+<a href="product.html">
+Order Now
+</a>
+
+</section>
+
+
+
+<script>
+
+/* MOBILE MENU TOGGLE */
+document
+.getElementById("menuBtn")
+.addEventListener(
+"click",
+function(){
+
+document
+.getElementById("navLinks")
+.classList.toggle("active");
+
+}
+);
+
+</script>
+
+
+</body>
+</html>

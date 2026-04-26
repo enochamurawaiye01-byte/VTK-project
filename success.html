@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Success</title>
+
+<style>
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0b3d2e, #145c45);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* ================= CARD ================= */
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ================= ICON ================= */
+.checkmark {
+  font-size: 70px;
+  color: #00ff88;
+  margin-bottom: 15px;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+/* ================= TEXT ================= */
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 15px;
+  opacity: 0.9;
+  margin-bottom: 25px;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #00ff88;
+  color: #0b3d2e;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #00cc6a;
+  transform: scale(1.05);
+}
+
+/* ================= ORDER INFO ================= */
+.order-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  font-size: 14px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="checkmark">✔</div>
+
+  <h1>Payment Successful</h1>
+
+  <p>Thank you for your order. Your payment has been received successfully.</p>
+
+  <div class="order-box" id="orderInfo">
+    Loading order details...
+  </div>
+
+  <br>
+
+  <a href="index.html" class="btn">Back to Home</a>
+
+</div>
+
+<script>
+/* ================= GET LAST ORDER ================= */
+let cart = JSON.parse(localStorage.getItem("cart") || "{}");
+
+/* ================= DISPLAY INFO ================= */
+const orderBox = document.getElementById("orderInfo");
+
+let keys = Object.keys(cart);
+
+if (keys.length === 0) {
+  orderBox.innerHTML = "No recent order found.";
+} else {
+
+  let total = 0;
+  let html = "<h3>Order Summary</h3><br>";
+
+  keys.forEach(name => {
+    let item = cart[name];
+    let itemTotal = item.qty * item.price;
+    total += itemTotal;
+
+    html += `
+      <p>${name} x${item.qty} = ₦${itemTotal}</p>
+    `;
+  });
+
+  html += `<br><strong>Total: ₦${total}</strong>`;
+
+  orderBox.innerHTML = html;
+
+  /* optional: clear cart after showing success */
+  localStorage.removeItem("cart");
+}
+</script>
+
+</body>
+</html>

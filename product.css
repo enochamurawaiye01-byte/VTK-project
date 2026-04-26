@@ -1,0 +1,286 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #f3f5f9;
+  color: #222;
+  padding-top: 90px;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 50px;
+  background: rgba(11, 61, 46, 0.95);
+  backdrop-filter: blur(6px);
+
+  z-index: 1000;
+}
+
+.logo {
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: orange;
+  transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ================= HAMBURGER ================= */
+.menu-btn {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* ================= PRODUCT GRID ================= */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+
+  padding: 30px 60px;
+}
+
+/* ================= PRODUCT CARD ================= */
+.product-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ================= SLIDER ================= */
+.slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slides img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ARROWS */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(0,0,0,0.4);
+  color: white;
+
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.slider:hover .prev,
+.slider:hover .next {
+  opacity: 1;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ================= DOTS ================= */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+
+  margin: 3px;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+}
+
+.dots .active {
+  background: orange;
+  transform: scale(1.3);
+}
+
+/* ================= PRODUCT INFO ================= */
+.product-card h3 {
+  padding: 10px 15px;
+  font-size: 18px;
+}
+
+.product-card p {
+  padding: 0 15px;
+  font-weight: bold;
+  color: #0b3d2e;
+}
+
+/* ================= QUANTITY INPUT ================= */
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
+.qty-box input {
+  width: 70px;
+  padding: 8px;
+  text-align: center;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* ================= ADD TO CART ================= */
+.add-cart {
+  margin: 0 15px 15px;
+  width: calc(100% - 30px);
+
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #ff9900, #ff6a00);
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-cart:hover {
+  transform: scale(1.03);
+}
+
+/* ================= CART SUMMARY ================= */
+.cart-summary {
+  background: white;
+  margin: 40px 60px;
+  padding: 20px;
+
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+/* ================= ORDER BUTTON ================= */
+.order-now {
+  width: 100%;
+  padding: 14px;
+
+  margin-top: 15px;
+
+  background: #0b3d2e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 80px;
+    right: 0;
+
+    flex-direction: column;
+    background: #0b3d2e;
+
+    width: 200px;
+    height: 0;
+    overflow: hidden;
+
+    transition: 0.3s ease;
+  }
+
+  .nav-links.active {
+    height: 180px;
+    padding: 10px;
+  }
+
+  .products {
+    padding: 20px;
+  }
+
+  .cart-summary {
+    margin: 20px;
+  }
+}

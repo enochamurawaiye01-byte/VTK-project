@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VTK Admin Portal</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif;}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle at top right,#1f5a32 0%,#0b3d2e 45%,#08150d 100%);
+overflow:hidden;
+}
+
+body:before,
+body:after{
+content:"";
+position:absolute;
+border-radius:50%;
+filter:blur(90px);
+opacity:.3;
+}
+
+body:before{
+width:420px;height:420px;
+background:#d4af37;
+top:-120px;right:-90px;
+}
+
+body:after{
+width:360px;height:360px;
+background:#2f8f52;
+bottom:-100px;left:-90px;
+}
+
+.panel{
+width:100%;
+max-width:460px;
+padding:20px;
+position:relative;
+z-index:2;
+}
+
+.card{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,.12);
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+border-radius:30px;
+padding:55px 38px;
+color:#fff;
+}
+
+.brand{
+text-align:center;
+margin-bottom:30px;
+}
+
+.brand h1{
+font-size:56px;
+color:#d4af37;
+letter-spacing:2px;
+margin-bottom:8px;
+}
+
+.brand p{
+opacity:.8;
+}
+
+h2{
+text-align:center;
+margin-bottom:28px;
+font-size:30px;
+}
+
+.field{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+margin-bottom:9px;
+font-size:14px;
+}
+
+input{
+width:100%;
+padding:17px 18px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.12);
+color:#fff;
+outline:none;
+}
+
+input:focus{
+border-color:#d4af37;
+}
+
+input::placeholder{
+color:#ddd;
+}
+
+button{
+width:100%;
+margin-top:12px;
+padding:18px;
+border:none;
+border-radius:50px;
+font-weight:700;
+font-size:16px;
+cursor:pointer;
+background:linear-gradient(45deg,#d4af37,#f0d978);
+color:#08150d;
+}
+
+button:hover{
+transform:translateY(-3px);
+}
+
+#msg{
+margin-top:18px;
+text-align:center;
+min-height:20px;
+font-size:14px;
+color:#f7e7a2;
+word-break:break-word;
+}
+
+.note{
+margin-top:24px;
+text-align:center;
+opacity:.7;
+font-size:13px;
+}
+
+@media(max-width:520px){
+.card{padding:45px 24px;}
+.brand h1{font-size:46px;}
+}
+</style>
+</head>
+<body>
+
+<div class="panel">
+<div class="card">
+
+<div class="brand">
+<h1>VTK</h1>
+<p>Secure Administrator Access</p>
+</div>
+
+<h2>Admin Login</h2>
+
+<div class="field">
+<label>Email</label>
+<input id="email" type="email" placeholder="admin@email.com">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input id="password" type="password" placeholder="Enter password">
+</div>
+
+<button onclick="login()">Login To Dashboard</button>
+
+<p id="msg"></p>
+
+<div class="note">
+Authorized Personnel Only
+</div>
+
+</div>
+</div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+setPersistence,
+browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+apiKey:"AIzaSyAaidcD5gxQhjCLl8dn8q0-J5uSvoF5WcM",
+authDomain:"vtk-project-1de73.firebaseapp.com",
+projectId:"vtk-project-1de73",
+storageBucket:"vtk-project-1de73.firebasestorage.app",
+messagingSenderId:"816086869920",
+appId:"1:816086869920:web:0147974de7b8ceb792a6c5"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function(){
+
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
+const msg = document.getElementById("msg");
+
+if(!email || !password){
+msg.innerText="Enter email and password.";
+return;
+}
+
+try{
+msg.innerText="Signing in...";
+
+/* safer placement */
+await setPersistence(auth,browserLocalPersistence);
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+msg.innerText="Login successful ✔";
+
+setTimeout(()=>{
+window.location.href="admin.html";
+},1000);
+
+}catch(error){
+
+if(error.code==="auth/invalid-credential"){
+msg.innerText="Incorrect email or password.";
+}
+else if(error.code==="auth/user-not-found"){
+msg.innerText="Admin account not found.";
+}
+else if(error.code==="auth/wrong-password"){
+msg.innerText="Wrong password.";
+}
+else{
+msg.innerText=error.message;
+}
+
+console.error(error);
+}
+
+}
+</script>
+
+</body>
+</html>

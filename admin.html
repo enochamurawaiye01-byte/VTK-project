@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>VTK Admin Panel</title>
+
+<link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+
+<h2>VTK ADMIN PANEL</h2>
+
+<div class="top-actions">
+
+<button onclick="show('dashboard')">
+Dashboard
+</button>
+
+<button onclick="show('sales')">
+Sales
+</button>
+
+<button onclick="show('orders')">
+Orders
+</button>
+
+<button onclick="show('products')">
+Products
+</button>
+
+<button onclick="show('messages')" id="msgBtn">
+Messages
+<span id="msgDot" class="dot"></span>
+</button>
+
+<a href="index.html" class="home-link">
+Go To Home Page
+</a>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= MAIN ================= -->
+<div class="main">
+
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="section active">
+
+<h1>Dashboard Overview</h1>
+
+<div class="grid">
+
+<div class="card">
+<h3>Total Revenue</h3>
+<p>₦<span id="totalRevenue">0</span></p>
+</div>
+
+<div class="card">
+<h3>Total Orders</h3>
+<p id="totalOrders">0</p>
+</div>
+
+<div class="card">
+<h3>Paid Orders</h3>
+<p id="paidOrders">0</p>
+</div>
+
+<div class="card">
+<h3>Delivered Orders</h3>
+<p id="deliveredOrders">0</p>
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- SALES -->
+<section id="sales" class="section">
+
+<h1>Sales Records</h1>
+
+<div id="salesList"></div>
+
+</section>
+
+
+
+<!-- ORDERS -->
+<section id="orders" class="section">
+
+<h1>Orders Management</h1>
+
+<div id="ordersList"></div>
+
+</section>
+
+
+
+<!-- PRODUCTS -->
+<section id="products" class="section">
+
+<h1>Product Manager</h1>
+
+
+<!-- SEARCH PRODUCT -->
+<input
+type="text"
+id="searchProduct"
+placeholder="Search product...">
+
+
+
+<!-- PRODUCT FORM -->
+<div class="card form">
+
+<input
+id="pname"
+placeholder="Product Name">
+
+<input
+id="pprice"
+placeholder="Price">
+
+<textarea
+id="pdesc"
+placeholder="Description"></textarea>
+
+
+<!-- 3 IMAGES FOR SLIDER -->
+<input type="file" id="img1">
+<input type="file" id="img2">
+<input type="file" id="img3">
+
+
+<!-- ACTION BUTTONS -->
+<button onclick="addProduct()">
+Add Product
+</button>
+
+<button
+id="updateBtn"
+onclick="updateProduct()"
+style="display:none;">
+Update Product
+</button>
+
+</div>
+
+
+<!-- PRODUCT LIST -->
+<div id="productList"></div>
+
+</section>
+
+
+
+<!-- CONTACT MESSAGES -->
+<section id="messages" class="section">
+
+<h1>Contact Messages</h1>
+
+<div id="messagesList">
+<p>Messages will load here...</p>
+</div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- ================= ADMIN JS ================= -->
+<script type="module" src="admin.js"></script>
+
+
+</body>
+</html>

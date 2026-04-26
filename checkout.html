@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VTK Checkout</title>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f6faf7;
+padding:20px;
+color:#0f2e1a;
+}
+
+.checkout-container{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+}
+
+.order-summary,
+.customer-form{
+background:#fff;
+padding:25px;
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+h2{
+color:#14532d;
+margin-bottom:20px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+padding:10px;
+margin-bottom:8px;
+background:#eef6ef;
+border-radius:10px;
+}
+
+.summary-total{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+color:#f59e0b;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:10px;
+border:1px solid #ddd;
+outline:none;
+}
+
+textarea{height:90px;}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+background:#14532d; /* DEEP GREEN */
+color:#fff;
+font-size:16px;
+border-radius:30px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0f3d23;
+transform:scale(1.02);
+}
+
+#pickupInfo{
+display:none;
+background:#e9f5ee;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+#deliveryFields{
+display:none;
+}
+
+.delivery-fee{
+font-size:14px;
+margin-top:5px;
+color:#14532d;
+}
+
+@media(max-width:900px){
+.checkout-container{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="checkout-container">
+
+<!-- ================= ORDER ================= -->
+<div class="order-summary">
+
+<h2>Order Summary</h2>
+
+<div id="cartItems"></div>
+
+<p class="delivery-fee" id="deliveryFeeText">
+Delivery Fee: ₦0
+</p>
+
+<div class="summary-total">
+Total: ₦<span id="totalPrice">0</span>
+</div>
+
+</div>
+
+<!-- ================= FORM ================= -->
+<div class="customer-form">
+
+<h2>Customer Details</h2>
+
+<input id="fullName" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone Number">
+
+<select id="deliveryMethod">
+<option value="">Select Delivery Option</option>
+<option value="Pickup">Pickup</option>
+<option value="Delivery">Delivery</option>
+</select>
+
+<div id="pickupInfo">
+<strong>Pickup Location:</strong><br>
+DKAY-VET, Gambari, Ilorin
+</div>
+
+<div id="deliveryFields">
+<input id="address" placeholder="Address">
+<input id="city" placeholder="City">
+</div>
+
+<textarea id="notes" placeholder="Notes"></textarea>
+
+<button id="payBtn">Proceed to Payment</button>
+
+</div>
+</div>
+
+<script>
+/* ================= CART ================= */
+
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+const cartItems = document.getElementById("cartItems");
+const totalPrice = document.getElementById("totalPrice");
+const deliveryFeeText = document.getElementById("deliveryFeeText");
+const deliveryMethod = document.getElementById("deliveryMethod");
+
+
+function calcTotal(){
+let total = 0;
+
+for(let itemName in cart){
+total += cart[itemName].qty * cart[itemName].price;
+}
+
+return total;
+}
+
+
+
+function render(){
+
+cartItems.innerHTML="";
+
+if(Object.keys(cart).length===0){
+cartItems.innerHTML="<p>Cart empty</p>";
+totalPrice.textContent="0";
+return;
+}
+
+for(let itemName in cart){
+
+let item = cart[itemName];
+
+let div=document.createElement("div");
+div.className="cart-item";
+
+div.innerHTML=`
+<span>${itemName} x ${item.qty}</span>
+<strong>₦${item.qty * item.price}</strong>
+`;
+
+cartItems.appendChild(div);
+
+}
+
+updateTotal();
+
+}
+
+
+
+function updateTotal(){
+
+let total = calcTotal();
+
+if(deliveryMethod.value==="Delivery"){
+
+total += 2000;
+
+deliveryFeeText.textContent=
+"Delivery Fee: ₦2000";
+
+}else{
+
+deliveryFeeText.textContent=
+"Delivery Fee: ₦0";
+
+}
+
+totalPrice.textContent=total;
+
+return total;
+
+}
+
+
+
+/* DELIVERY CHANGE */
+deliveryMethod.addEventListener("change",function(){
+
+document.getElementById("pickupInfo").style.display=
+deliveryMethod.value==="Pickup"
+? "block"
+: "none";
+
+
+document.getElementById("deliveryFields").style.display=
+deliveryMethod.value==="Delivery"
+? "block"
+: "none";
+
+
+updateTotal();
+
+});
+
+
+render();
+
+
+
+/* ================= SAVE ORDER ================= */
+
+function saveOrder(name,email,phone,amount,reference){
+
+return fetch(
+"https://firestore.googleapis.com/v1/projects/vtk-project-1de73/databases/(default)/documents/orders",
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+fields:{
+
+name:{
+stringValue:name
+},
+
+email:{
+stringValue:email
+},
+
+phone:{
+stringValue:phone
+},
+
+status:{
+stringValue:"paid"
+},
+
+reference:{
+stringValue:reference
+},
+
+amount:{
+integerValue:String(amount)
+},
+
+deliveryMethod:{
+stringValue:deliveryMethod.value
+},
+
+createdAt:{
+integerValue:String(Date.now())
+}
+
+}
+
+})
+
+}
+);
+
+}
+
+
+
+/* ================= PAYSTACK ================= */
+
+document.getElementById("payBtn")
+.addEventListener("click",function(){
+
+let name=
+document.getElementById("fullName").value.trim();
+
+let email=
+document.getElementById("email").value.trim();
+
+let phone=
+document.getElementById("phone").value.trim();
+
+let method=
+deliveryMethod.value;
+
+
+if(!name || !email || !phone || !method){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+
+let amount = updateTotal();
+
+
+if(typeof PaystackPop==="undefined"){
+
+alert("Paystack not loaded");
+
+return;
+
+}
+
+
+
+let handler = PaystackPop.setup({
+
+key:"pk_test_90aea27498769f458be24010622260c68d86aaac",
+
+email:email,
+
+amount:amount * 100,
+
+currency:"NGN",
+
+ref:"VTK-"+Date.now(),
+
+
+callback:function(response){
+
+saveOrder(
+name,
+email,
+phone,
+amount,
+response.reference
+)
+
+.then(function(){
+
+localStorage.removeItem("cart");
+
+alert("Payment Successful");
+
+window.location.href="pending.html";
+
+})
+
+.catch(function(error){
+
+console.error(error);
+
+alert(
+"Payment successful but order record failed to save."
+);
+
+});
+
+},
+
+
+onClose:function(){
+
+alert("Transaction cancelled");
+
+}
+
+});
+
+
+handler.openIframe();
+
+});
+
+</script>
+
+</body>
+</html>

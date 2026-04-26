@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VTK Products</title>
+<link rel="stylesheet" href="product.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">VTK</div>
+
+  <
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+   <li><a href="product.html">Product</a></li>
+     <li><a href="how-to-use.html">How to use</a></li>
+      <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+</header>
+
+<!-- ================= PRODUCTS ================= -->
+<section class="products">
+
+  <!-- ================= PRODUCT 1 ================= -->
+  <div class="product-card" data-price="5000">
+
+    <div class="slider">
+      <div class="slides">
+        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1" alt="">
+        <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783" alt="">
+        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30" alt="">
+      </div>
+
+      <button class="prev">❮</button>
+      <button class="next">❯</button>
+      <div class="dots"></div>
+    </div>
+
+    <h3>Saltlick Basic</h3>
+    <p>₦5000</p>
+
+    <div class="qty-box">
+      <button class="minus">-</button>
+      <span class="qty">1</span>
+      <button class="plus">+</button>
+    </div>
+
+    <button class="add-cart">Add to Cart</button>
+
+  </div>
+
+  <!-- ================= PRODUCT 2 ================= -->
+  <div class="product-card" data-price="8000">
+
+    <div class="slider">
+      <div class="slides">
+        <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a" alt="">
+        <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2" alt="">
+        <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8" alt="">
+      </div>
+
+      <button class="prev">❮</button>
+      <button class="next">❯</button>
+      <div class="dots"></div>
+    </div>
+
+    <h3>Saltlick Premium</h3>
+    <p>₦8000</p>
+
+    <div class="qty-box">
+      <button class="minus">-</button>
+      <span class="qty">1</span>
+      <button class="plus">+</button>
+    </div>
+
+    <button class="add-cart">Add to Cart</button>
+
+  </div>
+
+  <!-- ================= PRODUCT 3 ================= -->
+  <div class="product-card" data-price="12000">
+
+    <div class="slider">
+      <div class="slides">
+        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30" alt="">
+        <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="">
+        <img src="https://images.unsplash.com/photo-1598974357801-cbca100e65d3" alt="">
+      </div>
+
+      <button class="prev">❮</button>
+      <button class="next">❯</button>
+      <div class="dots"></div>
+    </div>
+
+    <h3>Saltlick Pro Max</h3>
+    <p>₦12000</p>
+
+    <div class="qty-box">
+      <button class="minus">-</button>
+      <span class="qty">1</span>
+      <button class="plus">+</button>
+    </div>
+
+    <button class="add-cart">Add to Cart</button>
+
+  </div>
+
+</section>
+
+<!-- ================= CART SUMMARY ================= -->
+<section class="cart-summary">
+  <h2>Cart Summary</h2>
+  <p>Total Items: <span id="total-items">0</span></p>
+  <p>Total Price: ₦<span id="total-price">0</span></p>
+
+  <!-- ONLY ONE ORDER BUTTON -->
+  <a href="checkout.html"><button class="order-now">Order Now</button></a>
+</section>
+
+<script src="product.js"></script>
+
+</body>
+</html>

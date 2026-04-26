@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Pending</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .box {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .status {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    color: #0b3d2e;
+    margin-bottom: 10px;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    background: #f4f4f4;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+  }
+
+  .total {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: right;
+  }
+
+  .btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #0b3d2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background: #145c45;
+  }
+
+  .empty {
+    text-align: center;
+    color: #777;
+  }
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+  <div class="status">
+    ⏳ PAYMENT RECEIVED — WAITING FOR ADMIN APPROVAL
+  </div>
+
+  <h2>Order Summary</h2>
+
+  <div id="orderBox"></div>
+
+  <div class="total">
+    Total: ₦<span id="total">0</span>
+  </div>
+
+  <button class="btn" onclick="goHome()">Back to Home</button>
+
+</div>
+
+<script>
+  let order = JSON.parse(localStorage.getItem("lastOrder"));
+
+  const orderBox = document.getElementById("orderBox");
+  const totalEl = document.getElementById("total");
+
+  if (!order) {
+    orderBox.innerHTML = "<p class='empty'>No order found</p>";
+  } else {
+
+    let cart = order.cart || {};
+    let total = order.total || 0;
+
+    for (let name in cart) {
+      let item = cart[name];
+
+      let div = document.createElement("div");
+      div.className = "item";
+
+      div.innerHTML = `
+        <span>${name} x ${item.qty}</span>
+        <strong>₦${item.qty * item.price}</strong>
+      `;
+
+      orderBox.appendChild(div);
+    }
+
+    totalEl.innerText = total;
+  }
+
+  function goHome() {
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>
